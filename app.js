@@ -1,37 +1,42 @@
+require('dotenv');
+
 const express = require('express');
 const bodyParser = require('body-parser');
 
+const port = process.env.PORT || 3000;
+
+//const rotas = require('./routes/');
+const index = require('./routes/indexRouter');
+const usuarios = require('./routes/usuariosRouter');
+const enderecos = require('./routes/enderecosRouter');
+
 const app = express();
-const models = require('./app/models/');
-const Usuario = models.Usuario;
 
 app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.get('/', (req, res) => {
-  res.send('Hello World!');
+app.use('/', index);
+app.use('/usuarios', usuarios);
+app.use('/grupos', enderecos);
+
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+  var err = new Error('Not Found');
+  err.status = 404;
+  next(err);
 });
 
-app.get('/usuarios', (req, res) => {  //Listar todos
+// error handler
+app.use(function(err, req, res, next) {
+  // set locals, only providing error in development
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-}); 
-
-app.post('/usuarios', async (req, res) => { // Criar
-  const usuario = await Usuario.create(req.body);
-  res.json('Cliente Cadastrado Com Sucesso');
+  // render the error page
+  res.status(err.status || 500);
+  res.render('error');
 });
 
-app.get('/usuarios/:id', (req, res) => { //Buscar
-
-}); 
-
-app.put('/usuarios/:id', (req, res) => { //Editar
-
-}); 
-
-app.delete('/usuarios/:id', async (req, res) => { //Deletar
-  const usuario = await Usuario.delete(req.body);
-  res.json('Cliente Deletado Com Sucesso');
-}); 
-
-app.listen(3000);
+app.listen(port, () => {
+  console.log(`Server is running at localhost:${port}`)
+});

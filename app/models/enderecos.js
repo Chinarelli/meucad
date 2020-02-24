@@ -1,8 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
     const Endereco = sequelize.define('Endereco', {
-      name: DataTypes.STRING,
-      email: DataTypes.STRING,
       descricao: DataTypes.STRING,
       status: DataTypes.STRING,
       pais: DataTypes.STRING,
@@ -13,10 +11,9 @@ module.exports = (sequelize, DataTypes) => {
       referencia: DataTypes.STRING,
       tipo: DataTypes.STRING,
       cep: DataTypes.STRING,
-      usuarioId: DataTypes.INTEGER
-    });
+    }, {});
     Endereco.associate = function(models) {
-       Endereco.hasMany(models.Usuario, {as: 'usuario'})
+      Endereco.belongsTo(models.Usuario, {foreignKey: 'usuarioId', as: 'usuario'})
     };  
     return Endereco;
   }

@@ -16,6 +16,9 @@ module.exports = (sequelize, DataTypes) => {
       profissao: DataTypes.STRING,
       empresa: DataTypes.STRING
     });
+    /* Usuario.associate = function(models) {
+      Usuario.hasMany(models.Endereco, {as: 'endereco'})
+    }; */
   
     return Usuario;
   }

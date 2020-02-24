@@ -52,7 +52,7 @@ module.exports = {
       usuarioId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: {         // User belongsTo Company 1:1
+        references: {        
           model: 'Usuarios',
           key: 'id'
         }

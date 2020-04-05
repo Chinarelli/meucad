@@ -18,6 +18,8 @@ app.use('/', index);
 app.use('/usuarios', usuarios);
 app.use('/enderecos', enderecos);
 
+app.disable('x-powered-by');
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   const err = new Error('Not Found');

@@ -2,12 +2,19 @@ const express = require('express');
 const router = express.Router();
 const {Usuario} = require('../models');
 
+function meuMiddleware(req, res, next) {
+  console.log();
+  console.log('Passei pelo Middleware de Teste! ');
+  console.log();
+  next();
+}
+
 router.post('/', async (req, res) => { // Criar
    await Usuario.create(req.body);
    res.send('Usuario Cadastrado Com Sucesso!');
 });
 
-router.get('/', async (req, res) => {  //Listar todos
+router.get('/', meuMiddleware,  async (req, res) => {  //Listar todos
 	 const usuariosListAll = await Usuario.findAll(req.body);
 	 res.send(usuariosListAll); 
 });
